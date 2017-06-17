@@ -1,4 +1,4 @@
-package Juego;
+package game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.awt.*;
 public class Game extends Canvas implements Runnable {
 
     /*
-    *   Aquí van las variables que pertenecen a la ventana del juego.
+    *   Aquí van las variables que pertenecen a la ventana del game.
     */
 
     //private static final long serialVersionUID = 1L;
@@ -82,7 +82,7 @@ public class Game extends Canvas implements Runnable {
 
     private void toUpdate () {
         /*
-        * Se encarga de actualizar todas las variables del juego.
+        * Se encarga de actualizar todas las variables del game.
          */
 
         ups++;
@@ -90,7 +90,7 @@ public class Game extends Canvas implements Runnable {
 
     private void toShow() {
         /*
-        * Se encarga de mostrar las cosas en el juego.
+        * Se encarga de mostrar las cosas en el game.
          */
 
         fps++;
@@ -105,7 +105,7 @@ public class Game extends Canvas implements Runnable {
          *
          * delta = Cantidad de tiempo hasta realizar una actualización.
          * timeElapsed = Tiempo que ha pasado desde que se referenció hasta el inicio.
-         * Todo esto es para actualizar el juego.
+         * Todo esto es para actualizar el game.
           */
 
         final int NS_FOR_SECOND = 1000000000;
