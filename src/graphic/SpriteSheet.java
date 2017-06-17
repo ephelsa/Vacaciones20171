@@ -12,7 +12,7 @@ public class SpriteSheet {
     private final int width;
     private final int heigth;
 
-    private final int[] pixels; // publc -> Para acceder agresivamente. Ejecución > Elegancia.
+    private final int[] pixels; // public -> Para acceder agresivamente. Ejecución > Elegancia.
 
     public SpriteSheet(final String route, final int width, final int heigth) {
         this.width = width;

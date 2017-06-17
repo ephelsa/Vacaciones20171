@@ -1,5 +1,7 @@
 package game;
 
+import control.Keyboard;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -26,13 +28,17 @@ public class Game extends Canvas implements Runnable {
 
     private static JFrame window;
     private static Thread thread;
+    private static Keyboard keyboard;
 
     private Game() {
         /*
-        * Características de la ventana.
+        * Características del juego.
         */
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+        keyboard = new Keyboard();
+        addKeyListener(keyboard);
 
         window = new JFrame(TITLE);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,8 +54,8 @@ public class Game extends Canvas implements Runnable {
         /*
         * Método principal.
          */
-        Game ventana = new Game();
-        ventana.startThread();
+        Game window = new Game();
+        window.startThread();
     }
 
     private synchronized void startThread() {
@@ -82,8 +88,26 @@ public class Game extends Canvas implements Runnable {
 
     private void toUpdate () {
         /*
-        * Se encarga de actualizar todas las variables del game.
+        * Se encarga de actualizar todas las variables del juego.
          */
+
+        keyboard.toUpdate();
+
+        if (keyboard.escKey) {
+            System.out.println("Salir");
+        }
+        if (keyboard.upKey) {
+            System.out.println("Arriba");
+        }
+        if (keyboard.downKey) {
+            System.out.println("Abajo");
+        }
+        if (keyboard.leftKey) {
+            System.out.println("Izquierda");
+        }
+        if (keyboard.rightKey) {
+            System.out.println("Derecha");
+        }
 
         ups++;
     }
@@ -105,7 +129,7 @@ public class Game extends Canvas implements Runnable {
          *
          * delta = Cantidad de tiempo hasta realizar una actualización.
          * timeElapsed = Tiempo que ha pasado desde que se referenció hasta el inicio.
-         * Todo esto es para actualizar el game.
+         * Todo esto es para actualizar el juego.
           */
 
         final int NS_FOR_SECOND = 1000000000;
@@ -117,6 +141,8 @@ public class Game extends Canvas implements Runnable {
 
         double timeElapsed;
         double delta = 0;
+
+        requestFocus(); // Para que el usuario no cliquee en la ventana.
 
         while (isWorking) {
             final long loopStart = System.nanoTime();
