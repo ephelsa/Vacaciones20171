@@ -1,5 +1,7 @@
 package graphic;
 
+import map.tile.Tile;
+
 /**
  * Created by ephelsa on 16/06/17.
  */
@@ -32,7 +34,7 @@ public final class Screen {
             pixels[i] = 0;
         }
     }
-
+// Temporal
     public void showScreen(final int compensationX, final int compensationY) {
         /** Dibujar en pantalla
          * Después de estar limpia, este método se encarga de dibujar.
@@ -60,10 +62,35 @@ public final class Screen {
 
                 // Código para dibujar en pantalla.
                 // TEMPORAL
-                pixels[posX + posY * width] = Sprite.asphalt.pixels[(x & SPRITE_MASK)
+                pixels[posX + posY * width] = Sprite.ASPHALT.pixels[(x & SPRITE_MASK)
                         + (y & SPRITE_MASK) * SPRITE_SIDE];
                 // END TEMPORAL
             }
         }
+    }
+    //End temporal
+
+    public void showTile(int compensationX, int compensationY, Tile tile) {
+        for (int y = 0; y < tile.sprite.getSide(); y++) {
+            int posY = y + compensationY;
+
+            for (int x = 0; x < tile.sprite.getSide(); x++) {
+                int posX = x + compensationX;
+
+                if (posX < 0 || posX > width || posY < 0 || posY > height) {
+                    break;
+                }
+
+                pixels[posX + posY * width] = tile.sprite.pixels[x + y * tile.sprite.getSide()];
+            }
+        }
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

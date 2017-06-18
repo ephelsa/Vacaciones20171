@@ -15,7 +15,7 @@ public final class Sprite {
     public final int[] pixels;
 
     // Coleccion de sprites
-    public static Sprite asphalt = new Sprite(32, 0, 0, SpriteSheet.desert);
+    public static final Sprite ASPHALT = new Sprite(32, 0, 0, SpriteSheet.desert);
     // fin coleccion de sprites
 
     public Sprite(final int side, final int col, final int row, final SpriteSheet sheet) {
@@ -33,5 +33,9 @@ public final class Sprite {
                 pixels[x + y * side] = sheetPixels[(x + this.x) + (y + this.y) + sheet.getWidth()];
             }
         }
+    }
+
+    public int getSide() {
+        return side;
     }
 }
