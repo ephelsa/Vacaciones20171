@@ -1,5 +1,6 @@
 package game;
 
+import alert.Alerts;
 import control.Keyboard;
 import graphic.Screen;
 import map.Map;
@@ -29,6 +30,9 @@ public class Game extends Canvas implements Runnable {
 
     private static volatile boolean isWorking = false;
 
+    private static String UPS = "";
+    private static String FPS = "";
+
     private static int ups = 0;
     private static int fps = 0;
 
@@ -39,6 +43,7 @@ public class Game extends Canvas implements Runnable {
 
     private static JFrame window;
     private static Thread thread;
+    private static Alerts alerts;
     private static Keyboard keyboard;
     private static Screen screen;
 
@@ -66,6 +71,7 @@ public class Game extends Canvas implements Runnable {
         map = new MapGenerator(TILE_WIDTH, TILE_HEIGHT);
 
         window = new JFrame(TITLE);
+        window.setUndecorated(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setLayout(new BorderLayout());
@@ -73,6 +79,8 @@ public class Game extends Canvas implements Runnable {
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
+        alerts = new Alerts();
     }
 
     public static void main(String[] args) {
@@ -115,11 +123,10 @@ public class Game extends Canvas implements Runnable {
         /*
         * Se encarga de actualizar todas las variables del juego.
          */
-
         keyboard.toUpdate();
 
         if (keyboard.escKey) {
-            System.exit(0);
+            alerts.exitConfirmation();
         }
         if (keyboard.upKey) {
             y -= SPEED_MOVE;
@@ -160,6 +167,12 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.setColor(Color.RED);
         g.fillRect(WIDTH/2, HEIGHT/2, 32, 32);
+
+        g.setColor(Color.white);
+        g.drawString(TITLE, 10, 15);
+        g.drawString(UPS, 10, 35);
+        g.drawString(FPS, 10, 45);
+
         g.dispose();
 
         strategy.show();
@@ -209,6 +222,10 @@ public class Game extends Canvas implements Runnable {
             if (System.nanoTime() - countReference > NS_FOR_SECOND) {
                 // Mostrar los Frames Por Segundo - Actualizaciones Por Segundo
                 window.setTitle(TITLE + " || UPS: " + ups + " || FPS: " + fps);
+
+                UPS = "UPS = " + ups;
+                FPS = "FPS = " + fps;
+
                 ups = 0;
                 fps = 0;
                 countReference = System.nanoTime();
