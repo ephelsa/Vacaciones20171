@@ -1,9 +1,13 @@
 package game;
 
 import control.Keyboard;
+import graphic.Screen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 /**
  * Created by ephelsa on 16/06/17.
@@ -14,10 +18,10 @@ public class Game extends Canvas implements Runnable {
     *   Aquí van las variables que pertenecen a la ventana del game.
     */
 
-    //private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-    private static final int WIDTH = 720;
-    private static final int HEIGHT = 460;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
 
     private static volatile boolean isWorking = false;
 
@@ -26,9 +30,18 @@ public class Game extends Canvas implements Runnable {
     private static int ups = 0;
     private static int fps = 0;
 
+    private static int x = 0;
+    private static int y = 0;
+
     private static JFrame window;
     private static Thread thread;
     private static Keyboard keyboard;
+    private static Screen screen;
+
+    private static BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
+            BufferedImage.TYPE_INT_RGB);
+    private static int[] pixels = ((DataBufferInt) image.getRaster()
+            .getDataBuffer()).getData();
 
     private Game() {
         /*
@@ -39,6 +52,8 @@ public class Game extends Canvas implements Runnable {
 
         keyboard = new Keyboard();
         addKeyListener(keyboard);
+
+        screen = new Screen(WIDTH, HEIGHT);
 
         window = new JFrame(TITLE);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,16 +112,16 @@ public class Game extends Canvas implements Runnable {
             System.out.println("Salir");
         }
         if (keyboard.upKey) {
-            System.out.println("Arriba");
+            y++;
         }
         if (keyboard.downKey) {
-            System.out.println("Abajo");
+            y--;
         }
         if (keyboard.leftKey) {
-            System.out.println("Izquierda");
+            x++;
         }
         if (keyboard.rightKey) {
-            System.out.println("Derecha");
+            x--;
         }
 
         ups++;
@@ -116,6 +131,34 @@ public class Game extends Canvas implements Runnable {
         /*
         * Se encarga de mostrar las cosas en el game.
          */
+
+        BufferStrategy strategy = getBufferStrategy();
+
+        if (strategy == null) {
+            createBufferStrategy(2);
+
+            return;
+        }
+
+        screen.cleanScreen();
+        screen.showScreen(x, y);
+
+        System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
+
+//        for (int i = 0; i < pixels.length; i++) {
+//            pixels[i] = screen.pixels[i];
+
+        // Costoso para máquinas viejas (Versiones viejas de JAVA).
+//        }
+
+        Graphics g = strategy.getDrawGraphics();
+
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        g.setColor(Color.RED);
+        g.fillRect(WIDTH/2, HEIGHT/2, 32, 32);
+        g.dispose();
+
+        strategy.show();
 
         fps++;
     }

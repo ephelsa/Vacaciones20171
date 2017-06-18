@@ -10,6 +10,11 @@ public final class Screen {
 
     public final int[] pixels;
 
+    //TEMPORALS
+    private final static int SPRITE_SIDE = 32;
+    private final static int SPRITE_MASK = SPRITE_SIDE - 1;
+    //END TEMPORALS
+
     public Screen(final int width, final int height) {
         this.width = width;
         this.height = height;
@@ -54,6 +59,10 @@ public final class Screen {
                 }
 
                 // Código para dibujar en pantalla.
+                // TEMPORAL
+                pixels[posX + posY * width] = Sprite.asphalt.pixels[(x & SPRITE_MASK)
+                        + (y & SPRITE_MASK) * SPRITE_SIDE];
+                // END TEMPORAL
             }
         }
     }

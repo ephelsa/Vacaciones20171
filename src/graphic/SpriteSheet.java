@@ -11,8 +11,11 @@ public class SpriteSheet {
 
     private final int width;
     private final int heigth;
-
     private final int[] pixels; // public -> Para acceder agresivamente. Ejecución > Elegancia.
+
+    // Colección de hojas de sprites
+    public static SpriteSheet desert = new SpriteSheet("/textures/floor_tile.png", 320, 320);
+    // fin de colección
 
     public SpriteSheet(final String route, final int width, final int heigth) {
         this.width = width;
@@ -42,5 +45,4 @@ public class SpriteSheet {
     public int[] getPixels() {
         return pixels;
     }
-
 }
