@@ -10,12 +10,10 @@ public final class Screen {
     private final int width;
     private final int height;
 
-    public final int[] pixels;
+    private int differenceX;
+    private int differenceY;
 
-    //TEMPORALS
-    private final static int SPRITE_SIDE = 32;
-    private final static int SPRITE_MASK = SPRITE_SIDE - 1;
-    //END TEMPORALS
+    public final int[] pixels;
 
     public Screen(final int width, final int height) {
         this.width = width;
@@ -34,52 +32,21 @@ public final class Screen {
             pixels[i] = 0;
         }
     }
-// Temporal
-    public void showScreen(final int compensationX, final int compensationY) {
-        /** Dibujar en pantalla
-         * Después de estar limpia, este método se encarga de dibujar.
-         */
-
-        for (int y = 0; y < height; y++) {
-            int posY = y + compensationY;
-
-            if (posY < 0 || posY >= height) {
-                /* Gestiona que no se salga de la ventana.
-                 * "continue" hace que pase directamente al otro for.
-                 */
-                continue;
-            }
-
-            for (int x = 0; x < width; x++) {
-                int posX = x + compensationX;
-
-                if (posX < 0 || posX >= width) {
-                /* Gestiona que no se salga de la ventana.
-                 * "continue" hace que pase directamente al otro for.
-                 */
-                    continue;
-                }
-
-                // Código para dibujar en pantalla.
-                // TEMPORAL
-                pixels[posX + posY * width] = Sprite.ASPHALT.pixels[(x & SPRITE_MASK)
-                        + (y & SPRITE_MASK) * SPRITE_SIDE];
-                // END TEMPORAL
-            }
-        }
-    }
-    //End temporal
 
     public void showTile(int compensationX, int compensationY, Tile tile) {
+        compensationX -= differenceX;
+        compensationY -= differenceY;
+
         for (int y = 0; y < tile.sprite.getSide(); y++) {
             int posY = y + compensationY;
 
             for (int x = 0; x < tile.sprite.getSide(); x++) {
                 int posX = x + compensationX;
 
-                if (posX < 0 || posX > width || posY < 0 || posY > height) {
+                if (posX < -tile.sprite.getSide() || posX >= width || posY < 0 || posY >= height) {
                     break;
                 }
+                if (posX < 0) { posX = 0; }
 
                 pixels[posX + posY * width] = tile.sprite.pixels[x + y * tile.sprite.getSide()];
             }
@@ -92,5 +59,10 @@ public final class Screen {
 
     public int getHeight() {
         return height;
+    }
+
+    public void setDifference(final int differenceX, final int differenceY) {
+        this.differenceX = differenceX;
+        this.differenceY = differenceY;
     }
 }

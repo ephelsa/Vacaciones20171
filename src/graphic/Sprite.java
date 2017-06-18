@@ -17,6 +17,7 @@ public final class Sprite {
     // Coleccion de sprites
     public static final Sprite ASPHALT = new Sprite(32, 0, 0, SpriteSheet.desert);
     public static final Sprite VOID = new Sprite(32, 0);
+    public static final Sprite LAVA = new Sprite(32, 0xc65a07);
     // fin coleccion de sprites
 
     public Sprite(final int side, final int col, final int row, final SpriteSheet sheet) {

@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class MapGenerator extends Map {
 
-    private final Random random = new Random();
+    private static final Random random = new Random();
 
     public MapGenerator(int width, int height) {
         super(width, height);

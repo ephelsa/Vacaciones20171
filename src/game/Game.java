@@ -2,6 +2,8 @@ package game;
 
 import control.Keyboard;
 import graphic.Screen;
+import map.Map;
+import map.MapGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,9 +25,9 @@ public class Game extends Canvas implements Runnable {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
-    private static volatile boolean isWorking = false;
-
     private static final String TITLE = "Ventana <3";
+
+    private static volatile boolean isWorking = false;
 
     private static int ups = 0;
     private static int fps = 0;
@@ -33,10 +35,16 @@ public class Game extends Canvas implements Runnable {
     private static int x = 0;
     private static int y = 0;
 
+    private static final int SPEED_MOVE = 3;
+
     private static JFrame window;
     private static Thread thread;
     private static Keyboard keyboard;
     private static Screen screen;
+
+    private static final int TILE_WIDTH = 128;
+    private static final int TILE_HEIGHT = 128;
+    private static Map map;
 
     private static BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
             BufferedImage.TYPE_INT_RGB);
@@ -54,6 +62,8 @@ public class Game extends Canvas implements Runnable {
         addKeyListener(keyboard);
 
         screen = new Screen(WIDTH, HEIGHT);
+
+        map = new MapGenerator(TILE_WIDTH, TILE_HEIGHT);
 
         window = new JFrame(TITLE);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,19 +119,19 @@ public class Game extends Canvas implements Runnable {
         keyboard.toUpdate();
 
         if (keyboard.escKey) {
-            System.out.println("Salir");
+            System.exit(0);
         }
         if (keyboard.upKey) {
-            y++;
+            y -= SPEED_MOVE;
         }
         if (keyboard.downKey) {
-            y--;
+            y += SPEED_MOVE;
         }
         if (keyboard.leftKey) {
-            x++;
+            x -= SPEED_MOVE;
         }
         if (keyboard.rightKey) {
-            x--;
+            x += SPEED_MOVE;
         }
 
         ups++;
@@ -135,21 +145,15 @@ public class Game extends Canvas implements Runnable {
         BufferStrategy strategy = getBufferStrategy();
 
         if (strategy == null) {
-            createBufferStrategy(2);
+            createBufferStrategy(3);
 
             return;
         }
 
         screen.cleanScreen();
-        screen.showScreen(x, y);
+        map.show(x, y, screen);
 
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
-
-//        for (int i = 0; i < pixels.length; i++) {
-//            pixels[i] = screen.pixels[i];
-
-        // Costoso para máquinas viejas (Versiones viejas de JAVA).
-//        }
 
         Graphics g = strategy.getDrawGraphics();
 
