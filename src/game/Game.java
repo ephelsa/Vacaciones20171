@@ -4,6 +4,7 @@ import alert.Alerts;
 import control.Keyboard;
 import graphic.Screen;
 import map.Map;
+import map.MapCharged;
 import map.MapGenerator;
 
 import javax.swing.*;
@@ -68,7 +69,8 @@ public class Game extends Canvas implements Runnable {
 
         screen = new Screen(WIDTH, HEIGHT);
 
-        map = new MapGenerator(TILE_WIDTH, TILE_HEIGHT);
+        // map = new MapGenerator(TILE_WIDTH, TILE_HEIGHT);
+        map = new MapCharged("/maps/nivel.png");
 
         window = new JFrame(TITLE);
         window.setUndecorated(true);

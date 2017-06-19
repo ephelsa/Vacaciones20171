@@ -15,24 +15,39 @@ public final class Sprite {
     public final int[] pixels;
 
     // Coleccion de sprites
-    public static final Sprite ASPHALT = new Sprite(32, 0, 0, SpriteSheet.desert);
+    private static final SpriteSheet SHEET1 = SpriteSheet.sheet;
+
     public static final Sprite VOID = new Sprite(32, 0);
-    public static final Sprite LAVA = new Sprite(32, 0xc65a07);
+
+    public static final Sprite ASPHALT = new Sprite(32, 0, 0, SHEET1);
+    public static final Sprite ASPHALT_LINE = new Sprite(32, 3, 0, SHEET1);
+
+    public static final Sprite SAND = new Sprite(32, 1, 0, SHEET1);
+    public static final Sprite SAND_TA1_L = new Sprite(32, 2, 0, SHEET1);
+    public static final Sprite SAND_TA2_L = new Sprite(32, 2, 1, SHEET1);
+    public static final Sprite SAND_TA3_L = new Sprite(32, 2, 2, SHEET1);
+    public static final Sprite SAND_TA1_R = new Sprite(32, 4, 0, SHEET1);
+    public static final Sprite SAND_TA2_R = new Sprite(32, 4, 1, SHEET1);
+    public static final Sprite SAND_TA3_R = new Sprite(32, 4, 2, SHEET1);
+
+    public static final Sprite WATER = new Sprite(32, 5, 0, SHEET1);
+    public static final Sprite WATER_S1_R = new Sprite(32, 6, 0, SHEET1);
+    public static final Sprite WATER_S2_R = new Sprite(32, 6, 1, SHEET1);
     // fin coleccion de sprites
 
     public Sprite(final int side, final int col, final int row, final SpriteSheet sheet) {
         this.side = side;
         this.sheet = sheet;
-        this.x = col * side;
-        this.y = row * side;
+        this.x = col * this.side;
+        this.y = row * this.side;
 
-        pixels = new int[side * side];
+        pixels = new int[this.side * this.side];
 
-        int[] sheetPixels = sheet.getPixels();
+        int[] sheetPixels = this.sheet.getPixels();
 
-        for (int y = 0; y < side; y++) {
-            for (int x = 0; x < side; x++) {
-                pixels[x + y * side] = sheetPixels[(x + this.x) + (y + this.y) + sheet.getWidth()];
+        for (int y = 0; y < this.side; y++) {
+            for (int x = 0; x < this.side; x++) {
+                pixels[x + y * this.side] = sheetPixels[(x + this.x) + (y + this.y) + this.sheet.getWidth()];
             }
         }
     }

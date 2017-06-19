@@ -13,6 +13,7 @@ public abstract class Map {
     protected int height;
 
     protected int[] tiles;
+    protected Tile[] tileCatalogue;
 
     public Map(int width, int height) {
         this.width = width;
@@ -24,7 +25,9 @@ public abstract class Map {
     }
 
     public Map(String route) {
-        uploadMap(route);
+        chargeMap(route);
+
+        generateMap();
     }
 
     private void uploadMap(String route) {
@@ -34,6 +37,8 @@ public abstract class Map {
     protected void generateMap() {
 
     }
+
+    protected void chargeMap(String route) {}
 
     public void update() {
 
@@ -50,12 +55,17 @@ public abstract class Map {
 
         for (int y = north; y < south; y++) {
             for (int x = west; x < east; x++) {
-                getTile(x, y).show(x, y, screen);
+                // getTile(x, y).show(x, y, screen);
+                if (x < 0 || y < 0 || x >= width || y >= height) {
+                    Tile.VOID.show(x, y, screen);
+                } else {
+                    tileCatalogue[x + y * width].show(x, y , screen);
+                }
             }
         }
     }
 
-    public Tile getTile(final int x, final int y) {
+    public Tile getRandomTile(final int x, final int y) {
         /*
         Creador de tiles al azar. Juego procedular.
          */
@@ -72,7 +82,37 @@ public abstract class Map {
                 return Tile.ASPHALT;
 
             case 1:
-                return Tile.LAVA;
+                return Tile.ASPHALT_LINE;
+
+            case 2:
+                return Tile.SAND;
+
+            case 3:
+                return Tile.SAND_TA1_L;
+
+            case 4:
+                return Tile.SAND_TA1_R;
+
+            case 5:
+                return Tile.SAND_TA2_L;
+
+            case 6:
+                return Tile.SAND_TA2_R;
+
+            case 7:
+                return Tile.SAND_TA3_L;
+
+            case 8:
+                return Tile.SAND_TA3_R;
+
+            case 9:
+                return Tile.WATER;
+
+            case 10:
+                return Tile.WATER_S1_R;
+
+            case 11:
+                return Tile.WATER_S2_R;
 
             default:
                 return Tile.VOID;
