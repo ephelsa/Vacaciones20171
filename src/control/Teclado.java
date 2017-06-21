@@ -9,15 +9,21 @@ public class Teclado implements KeyListener {
 	private final boolean[] TECLAS;
 	
 	// Definición de teclas.
-	private boolean w;	// Arriba
-	private boolean s;	// Abajo
-	private boolean a;	// Izquierda
-	private boolean d;	// Derecha
+	public boolean w;	// Arriba
+	public boolean s;	// Abajo
+	public boolean a;	// Izquierda
+	public boolean d;	// Derecha
 	// fin(Definición de teclas)
 	
 	public Teclado(final int NUMERO_TECLAS) {
 		this.NUMERO_TECLAS = NUMERO_TECLAS;
 		
+		TECLAS = new boolean[this.NUMERO_TECLAS];
+	}
+
+	public Teclado() {
+		this.NUMERO_TECLAS = 120;
+
 		TECLAS = new boolean[this.NUMERO_TECLAS];
 	}
 	
@@ -30,7 +36,7 @@ public class Teclado implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// Presionada.
+		// Presionar y soltar.
 		
 	}
 
@@ -45,5 +51,4 @@ public class Teclado implements KeyListener {
 		// Soltar una vez pulsada.
 		TECLAS[e.getKeyCode()] = false;
 	}
-
 }

@@ -9,6 +9,7 @@ import java.awt.image.*;
 
 import javax.swing.JFrame;
 
+import control.Teclado;
 import grafico.Pantalla;
 
 public class Juego extends Canvas implements Runnable {
@@ -22,15 +23,22 @@ public class Juego extends Canvas implements Runnable {
 	private static final int ANCHO = 500;
 	private static final int ALTO = 500;
 	
-	private static final int X = 0;
-	private static final int Y = 0;
-	
+	private static int componenteX = 0;
+	private static int componenteY = 0;
+
+	private static final int NUMERO_TECLAS = 120;
+
+	private static String APS = "APS: ";
+	private static String FPS = "FPS: ";
+
 	private static int aps = 0;
 	private static int fps = 0;
 	
 	private static JFrame ventana; 
 	private static Thread hilo;
+	private static Teclado teclado;
 	private static Pantalla pantalla;
+
 	
 	private static BufferedImage imagen = new BufferedImage(ANCHO, ALTO, BufferedImage.TYPE_INT_RGB);
 	private final static int[] pixeles = ((DataBufferInt) imagen.getRaster().getDataBuffer()).getData();
@@ -40,6 +48,7 @@ public class Juego extends Canvas implements Runnable {
 		setPreferredSize(new Dimension(ANCHO, ALTO));
 		
 		ventana = new JFrame(TITULO);
+		teclado = new Teclado();
 		pantalla = new Pantalla(ANCHO, ALTO);
 		
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +85,13 @@ public class Juego extends Canvas implements Runnable {
 	}
 	
 	public void actualizar() {
+
+        teclado.actualizarLectura();
+
+        if (teclado.w) {
+            System.out.println("Arriba");
+        }
+
 		aps++;		
 	}
 	
@@ -88,7 +104,7 @@ public class Juego extends Canvas implements Runnable {
 		}
 		
 		pantalla.limpiar();
-		pantalla.mostrar(X, Y);
+		pantalla.mostrar(componenteX, componenteY);
 		
 		System.arraycopy(pantalla.PIXELES, 0, pixeles, 0, pixeles.length);
 
@@ -99,7 +115,8 @@ public class Juego extends Canvas implements Runnable {
 		g.fillRect(ANCHO >> 1, ALTO >> 1, 32, 32);
 		
 		g.setColor(Color.WHITE);
-		g.drawString("Prueba", 10, 10);		
+		g.drawString(APS, 15, 20);
+		g.drawString(FPS, 15, 35);
 		
 		g.dispose();
 		estrategia.show();
@@ -138,9 +155,10 @@ public class Juego extends Canvas implements Runnable {
 			mostrar();
 			
 			if (System.nanoTime() - referenciaContador > NS_POR_SEGUNDO) {
-				
-				System.out.println("APS: " + aps + " || FPS: " + fps);
-				
+
+				APS = "APS: " + aps;
+				FPS = "FPS: " + fps;
+
 				aps = 0;
 				fps = 0;
 				
