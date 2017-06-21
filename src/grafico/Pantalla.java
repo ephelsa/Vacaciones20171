@@ -21,7 +21,7 @@ public final class Pantalla {
 	
 	public void limpiar() {
 		for (int i = 0; i < PIXELES.length; i++) {
-			PIXELES[i] = 0;
+			PIXELES[i] = 0xff5c5d5e;
 		}
 	}
 	

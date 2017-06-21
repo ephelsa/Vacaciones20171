@@ -26,6 +26,8 @@ public class Juego extends Canvas implements Runnable {
 	private static int componenteX = 0;
 	private static int componenteY = 0;
 
+	private static final int VELOCIDAD_MOVIMIENTO = 3;
+
 	private static final int NUMERO_TECLAS = 120;
 
 	private static String APS = "APS: ";
@@ -48,9 +50,11 @@ public class Juego extends Canvas implements Runnable {
 		setPreferredSize(new Dimension(ANCHO, ALTO));
 		
 		ventana = new JFrame(TITULO);
-		teclado = new Teclado();
+		teclado = new Teclado(NUMERO_TECLAS);
 		pantalla = new Pantalla(ANCHO, ALTO);
-		
+
+		addKeyListener(teclado);
+
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setResizable(false);
 		ventana.setLayout(new BorderLayout());
@@ -89,7 +93,16 @@ public class Juego extends Canvas implements Runnable {
         teclado.actualizarLectura();
 
         if (teclado.w) {
-            System.out.println("Arriba");
+            componenteY += VELOCIDAD_MOVIMIENTO;
+        }
+        if (teclado.s) {
+            componenteY -= VELOCIDAD_MOVIMIENTO;
+        }
+        if (teclado.a) {
+            componenteX += VELOCIDAD_MOVIMIENTO;
+        }
+        if (teclado.d) {
+            componenteX -= VELOCIDAD_MOVIMIENTO;
         }
 
 		aps++;		
