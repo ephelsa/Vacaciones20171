@@ -12,7 +12,7 @@ public final class Sprite {
     private int x;
     private int y;
 
-    public final int[] pixels;
+    public final int[] PIXELS;
 
     // Coleccion de sprites
     private static final SpriteSheet SHEET1 = SpriteSheet.sheet;
@@ -41,13 +41,17 @@ public final class Sprite {
         this.x = col * this.side;
         this.y = row * this.side;
 
-        pixels = new int[this.side * this.side];
+        PIXELS = new int[this.side * this.side];
 
-        int[] sheetPixels = this.sheet.getPixels();
+        pixelCreator();
+    }
 
-        for (int y = 0; y < this.side; y++) {
-            for (int x = 0; x < this.side; x++) {
-                pixels[x + y * this.side] = sheetPixels[(x + this.x) + (y + this.y) + this.sheet.getWidth()];
+    private void pixelCreator() {
+        int[] sheetPixels = sheet.getPixels();
+
+        for (int y = 0; y < side; y++) {
+            for (int x = 0; x < side; x++) {
+                PIXELS[x + y * side] = sheetPixels[(x + this.x) + (y + this.y) + sheet.getWidth()];
             }
         }
     }
@@ -55,10 +59,10 @@ public final class Sprite {
     public Sprite(final int side, final int color) {
         this.side = side;
 
-        pixels = new int[side * side];
+        PIXELS = new int[side * side];
 
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = color;
+        for (int i = 0; i < PIXELS.length; i++) {
+            PIXELS[i] = color;
         }
     }
 

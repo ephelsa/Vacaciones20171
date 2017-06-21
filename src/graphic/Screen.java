@@ -48,7 +48,7 @@ public final class Screen {
                 }
                 if (posX < 0) { posX = 0; }
 
-                pixels[posX + posY * width] = tile.sprite.pixels[x + y * tile.SIDE];
+                pixels[posX + posY * width] = tile.sprite.PIXELS[x + y * tile.SIDE];
             }
         }
     }

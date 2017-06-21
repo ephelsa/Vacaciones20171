@@ -158,7 +158,6 @@ public class Game extends Canvas implements Runnable {
 
             return;
         }
-
         screen.cleanScreen();
         map.show(x, y, screen);
 
