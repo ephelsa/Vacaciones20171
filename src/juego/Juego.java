@@ -20,8 +20,8 @@ public class Juego extends Canvas implements Runnable {
 	
 	private static boolean trabajando = false;
 	
-	private static final int ANCHO = 500;
-	private static final int ALTO = 500;
+	private static final int ANCHO = 720;
+	private static final int ALTO = 480;
 	
 	private static int componenteX = 0;
 	private static int componenteY = 0;
@@ -56,6 +56,7 @@ public class Juego extends Canvas implements Runnable {
 		addKeyListener(teclado);
 
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setUndecorated(true);
 		ventana.setResizable(false);
 		ventana.setLayout(new BorderLayout());
 		ventana.add(this, BorderLayout.CENTER);
@@ -92,6 +93,9 @@ public class Juego extends Canvas implements Runnable {
 
         teclado.actualizarLectura();
 
+        if (teclado.esc) {
+            System.exit(0);
+        }
         if (teclado.w) {
             componenteY += VELOCIDAD_MOVIMIENTO;
         }

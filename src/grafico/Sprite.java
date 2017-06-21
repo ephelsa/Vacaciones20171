@@ -15,7 +15,7 @@ public final class Sprite {
 	public final int[] PIXELES;
 	
 	// Colecciones
-	public final static Sprite ASFALTO = new Sprite(32, 3, 0, HojaSprites.ASFALTO);
+	public final static Sprite ASFALTO = new Sprite(32, 5, 0, HojaSprites.ASFALTO);
 	// fin(Colecciones)
 	
 	public Sprite(final int LADO, final int COLUMNA, final int FILA, final HojaSprites HOJA) {

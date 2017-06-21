@@ -9,6 +9,7 @@ public class Teclado implements KeyListener {
 	private final boolean[] TECLAS;
 	
 	// Definición de teclas.
+	public boolean esc;	// Salir
 	public boolean w;	// Arriba
 	public boolean s;	// Abajo
 	public boolean a;	// Izquierda
@@ -28,6 +29,7 @@ public class Teclado implements KeyListener {
 	}
 	
 	public void actualizarLectura() {
+		esc = TECLAS[KeyEvent.VK_ESCAPE];
 		w = TECLAS[KeyEvent.VK_W];
 		s = TECLAS[KeyEvent.VK_S];
 		a = TECLAS[KeyEvent.VK_A];
