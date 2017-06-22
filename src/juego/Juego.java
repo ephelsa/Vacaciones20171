@@ -42,8 +42,8 @@ public class Juego extends Canvas implements Runnable {
 	private static Pantalla pantalla;
 
 	
-	private static BufferedImage imagen = new BufferedImage(ANCHO, ALTO, BufferedImage.TYPE_INT_RGB);
-	private final static int[] pixeles = ((DataBufferInt) imagen.getRaster().getDataBuffer()).getData();
+	private final static BufferedImage FONDO_IMAGEN = new BufferedImage(ANCHO, ALTO, BufferedImage.TYPE_INT_RGB);
+	private final static int[] FONDO_PIXELES = ((DataBufferInt) FONDO_IMAGEN.getRaster().getDataBuffer()).getData();
 	
 	public Juego() {
 		
@@ -123,11 +123,11 @@ public class Juego extends Canvas implements Runnable {
 		pantalla.limpiar();
 		pantalla.mostrar(componenteX, componenteY);
 		
-		System.arraycopy(pantalla.PIXELES, 0, pixeles, 0, pixeles.length);
+		System.arraycopy(pantalla.PIXELES, 0, FONDO_PIXELES, 0, FONDO_PIXELES.length);
 
 		Graphics g = estrategia.getDrawGraphics();
-		g.drawImage(imagen, 0, 0, getWidth(), getHeight(), null);
-		
+		g.drawImage(FONDO_IMAGEN, 0, 0, getWidth(), getHeight(), null);
+
 		g.setColor(Color.GREEN);
 		g.fillRect(ANCHO >> 1, ALTO >> 1, 32, 32);
 		

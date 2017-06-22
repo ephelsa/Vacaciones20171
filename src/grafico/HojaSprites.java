@@ -14,7 +14,7 @@ public class HojaSprites {
 	private final int ALTO;
 	
 	// Colecciones
-	public final static HojaSprites ASFALTO = new HojaSprites("/texturas/sprite_sheet.png", 320, 320);
+	public final static HojaSprites ASFALTO = new HojaSprites("/texturas/fondo1.png", 320, 320);
 	// fin(Colecciones)
 	
 	public HojaSprites (final String RUTA, final int LADO) {

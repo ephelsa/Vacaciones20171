@@ -26,6 +26,8 @@ public final class Pantalla {
 	}
 	
 	public void mostrar(final int COMPENSACION_X, final int COMPENSACION_Y) {
+		final int[] PIXELES_SPRITE = Sprite.ASFALTO.PIXELES;
+
 		for (int y = 0; y < ALTO; y++) {
 			int posicionY = y + COMPENSACION_Y;
 			
@@ -40,8 +42,7 @@ public final class Pantalla {
 				if (posicionX < 0 || posicionX >= ANCHO) {
 					continue;
 				}
-				
-				final int[] PIXELES_SPRITE = Sprite.ASFALTO.PIXELES;
+
 				// Temporal
 				PIXELES[posicionX + posicionY * ANCHO] = PIXELES_SPRITE[(x & MASCARA_SPRITE)
 				                                                        + (y & MASCARA_SPRITE) * LADO_SPRITE];
