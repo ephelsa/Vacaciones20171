@@ -122,7 +122,7 @@ public class Juego extends Canvas implements Runnable {
 		
 		pantalla.limpiar();
 		pantalla.mostrar(componenteX, componenteY);
-		
+
 		System.arraycopy(pantalla.PIXELES, 0, FONDO_PIXELES, 0, FONDO_PIXELES.length);
 
 		Graphics g = estrategia.getDrawGraphics();
